@@ -1,0 +1,93 @@
+body {
+  font-family: "Comic Sans", "Comic Sans MS", cursive;
+}
+h1 {
+  text-align: center;
+}
+.container {
+  width: 800px;
+  margin: auto;
+  display: block;
+}
+.puzzle {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+.shuffle {
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+.w3c {
+  float: right;
+}
+#square1, #square2, #square3, #square4, #square5, #square6, #square7, #square8, #square9, #square10, #square11, #square12, #square13, #square14, #square15 {
+  width: 96px;
+  height: 96px;
+  border: 2px solid black;
+  display: inline-block;
+  float: left;
+  line-height: 96px;
+  text-align: center;
+  color: white;
+  font: 32px sans-serif;
+}
+#square16 {
+  width: 96px;
+  height: 96px;
+  border: 2px solid white;
+  display: inline-block;
+  float: left;
+}
+span {
+  display: inline-block;
+  padding-top: 25px;
+}
+#square1 {
+  background: url(background.jpg) 0 0 no-repeat border-box padding-box;
+}
+#square2 {
+  background: url(background.jpg) -100px 0 no-repeat border-box padding-box;
+}
+#square3 {
+  background: url(background.jpg) -200px 0 no-repeat border-box padding-box;
+}
+#square4 {
+  background: url(background.jpg) -300px 0 no-repeat border-box padding-box;
+}
+#square5 {
+  background: url(background.jpg) 0 -100px no-repeat border-box padding-box;
+}
+#square6 {
+  background: url(background.jpg) -100px -100px no-repeat border-box padding-box;
+}
+#square7 {
+  background: url(background.jpg) -200px -100px no-repeat border-box padding-box;
+}
+#square8 {
+  background: url(background.jpg) -300px -100px no-repeat border-box padding-box;
+}
+#square9 {
+  background: url(background.jpg) 0 -200px no-repeat border-box padding-box;
+}
+#square10 {
+  background: url(background.jpg) -100px -200px no-repeat border-box padding-box;
+}
+#square11 {
+  background: url(background.jpg) -200px -200px no-repeat border-box padding-box;
+}
+#square12 {
+  background: url(background.jpg) -300px -200px no-repeat border-box padding-box;
+}
+#square13 {
+  background: url(background.jpg) 0 -300px no-repeat border-box padding-box;
+}
+#square14 {
+  background: url(background.jpg) -100px -300px no-repeat border-box padding-box;
+}
+#square15 {
+  background: url(background.jpg) -200px -300px no-repeat border-box padding-box;
+}
