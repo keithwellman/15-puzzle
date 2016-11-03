@@ -30,7 +30,6 @@ h1 {
   border: 2px solid black;
   display: inline-block;
   float: left;
-  line-height: 96px;
   text-align: center;
   color: white;
   font: 32px sans-serif;
@@ -42,9 +41,9 @@ h1 {
   display: inline-block;
   float: left;
 }
-span {
+.piece p {
+  vertical-align: middle;
   display: inline-block;
-  padding-top: 25px;
 }
 #square1 {
   background: url(background.jpg) 0 0 no-repeat border-box padding-box;
