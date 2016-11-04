@@ -17,7 +17,7 @@ $("document").ready(function() {
       }
     }
   );
-  $(".piece").click(function(event) {
+  $(".puzzle").click(function(event) {
     move(event.target.id.toString());
   });
 });
@@ -31,26 +31,35 @@ function setBg() {
   selectedBg = selectBg.value;
   if (selectedBg == "HAL") {
     bg = "background.jpg";
+    for (var i = 1; i < 16; i++) {
+      document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
+    }
   }
   else if (selectedBg == "cs") {
     bg = "cs.jpg";
+    for (var i = 1; i < 16; i++) {
+      document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
+    }
   }
   else if (selectedBg == "Always Sunny") {
     bg = "sunny.jpg";
+    for (var i = 1; i < 16; i++) {
+      document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
+    }
   }
   else if (selectedBg == "enjoy") {
     bg = "enjoy.png";
+    for (var i = 1; i < 16; i++) {
+      document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
+    }
   }
 }
-
 
 // draw the squares: numOfRows^2
 function drawBoard(numOfRows) {
   board = [];
   boardObj = [];
-
   for (var i = 0; i < (numOfRows*numOfRows); i++) {
-    setBg();
     var squareDiv = document.createElement("div");
     squareDiv.id = "square" + (i+1); // give each square a unique id
     squareDiv.className = "piece";
@@ -58,9 +67,6 @@ function drawBoard(numOfRows) {
       squareDiv.innerHTML = "<p>"+(i+1)+"</p>"; // display the number on the square
     }
     document.getElementById("squares").appendChild(squareDiv);
-    if (squareDiv.id != "square16") {
-      document.getElementById(squareDiv.id).style.backgroundImage = "url('"+bg+"')";
-    }
     board[i] = squareDiv.id; //store each square id in an array
     boardObj[i] = squareDiv; //store each square object in array
   }
@@ -68,7 +74,7 @@ function drawBoard(numOfRows) {
 
 function shuffleBoard() {
   //shuffle the board
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 200; i++) {
     var randomNum = Math.floor(Math.random() * 15) + 1;
     var godCode = move("square"+randomNum);
     if (godCode != -1) {
@@ -84,6 +90,7 @@ function shuffleBoard() {
     }
   });
 }
+
 function swapElements(obj1, obj2) {
     var temp = document.createElement("div");
     obj1.parentNode.insertBefore(temp, obj1); //inert tmp before obj1
@@ -92,6 +99,7 @@ function swapElements(obj1, obj2) {
     temp.parentNode.removeChild(temp); //remove temp
     winner();
 }
+
 // move piece to empty space
 function move(piece) {
   // check if next to empty square and then move it
