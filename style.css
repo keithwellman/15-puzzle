@@ -21,8 +21,9 @@ h1 {
   display: block;
   text-align: center;
 }
-.w3c {
+#w3c {
   float: right;
+  display: inline-block;
 }
 #square1, #square2, #square3, #square4, #square5, #square6, #square7, #square8, #square9, #square10, #square11, #square12, #square13, #square14, #square15 {
   width: 96px;

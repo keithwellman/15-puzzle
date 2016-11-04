@@ -1,6 +1,6 @@
 // Extra features implemented:
 // End of game notification - uses the explode effect
-//
+// Multiple backgrounds - choose from 4 different background images
 
 $("document").ready(function() {
   // on mouseenter check if it's a movable piece
@@ -17,8 +17,13 @@ $("document").ready(function() {
       }
     }
   );
-  $(".puzzle").click(function(event) {
-    move(event.target.id.toString());
+  $(".piece").on('click', function(event) {
+    if (event.target.id.toString() == "") { // the p element was clicked
+      move(event.target.parentNode.id.toString());
+    }
+    else {
+      move(event.target.id.toString());
+    }
   });
 });
 
@@ -26,6 +31,9 @@ var god = [];
 var selectBg;
 var selectedBg;
 var bg;
+
+document.getElementById("w3c").innerHTML = '<p><a href="http://validator.w3.org/check?uri=referer"><img src="valid-xhtml10.png" alt="Valid XHTML 1.0!" height="31" width="88" /></a><a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="vcss.gif" alt="Valid CSS!" /></a></p>';
+
 function setBg() {
   selectBg = document.getElementById("bgSelect");
   selectedBg = selectBg.value;
@@ -61,10 +69,12 @@ function drawBoard(numOfRows) {
   boardObj = [];
   for (var i = 0; i < (numOfRows*numOfRows); i++) {
     var squareDiv = document.createElement("div");
+    var squareP = document.createElement("p");
     squareDiv.id = "square" + (i+1); // give each square a unique id
     squareDiv.className = "piece";
+    squareDiv.appendChild(squareP);
     if (i < ((numOfRows*numOfRows)-1)) {
-      squareDiv.innerHTML = "<p>"+(i+1)+"</p>"; // display the number on the square
+      squareDiv.firstChild.innerHTML = i+1; // display the number on the square
     }
     document.getElementById("squares").appendChild(squareDiv);
     board[i] = squareDiv.id; //store each square id in an array
@@ -113,14 +123,6 @@ function move(piece) {
     boardObj[pieceObj.pieceIndex] = boardObj[pieceObj.emptyPieceIndex];
     board[pieceObj.emptyPieceIndex] = tmp;
     boardObj[pieceObj.emptyPieceIndex] = tmpObjPiece;
-    // jQuery(function ($) {
-    //   // swap the pieces
-    //   // detach the empty piece, insert it before the clicked piece, then put the
-    //   // empty piece after the piece that was next to the empty piece
-    //   var detachedPiece = $(tmpObjPiece).detach();
-    //   $(detachedPiece).insertAfter(tmpObjEmpty);
-    //   $(tmpObjEmpty).insertAfter(boardObj[pieceObj.pieceIndex - 1]);
-    // });
     swapElements(tmpObjPiece, tmpObjEmpty);
     return pieceObj;
   }
