@@ -213,7 +213,8 @@ function winner() {
   if (win) {
     alert("you won!");
     jQuery(function ($) {
-      $(".puzzle").hide("explode", 1000, function() {
+      $(".puzzle").delay(1000).hide("explode", 1000);
+      $('body').animate({backgroundColor: "#000"}, 3000, function() {
         window.location.reload();
       });
     });
