@@ -94,20 +94,19 @@ function shuffleBoard() {
   //shuffle the board
   var shuffled = false;
   for (var i = 0; i < 200; i++) {
-    var randomNum = Math.floor(Math.random() * boardlength - 1) + 1;
+    var randomNum = Math.floor(Math.random() * boardlength ) + 1;
     var godCode = move("square"+randomNum);
     // if (godCode != -1) {
     //   god.push(godCode.pieceIndex); // creates an array of moves
     //   // document.getElementById("cheat").innerHTML += "square"+randomNum+"\n";
     // }
   }
-
   // clear style after shuffle
   for (var i = 1; i < boardlength; i++) {
     var squ = "square"+i;
-    document.getElementById(squ).style.borderColor = "black";
-    document.getElementById(squ).style.color = "white";
-    document.getElementById(squ).style.textDecoration = "none";
+    document.getElementById(squ.toString()).style.borderColor = "black";
+    document.getElementById(squ.toString()).style.color = "white";
+    document.getElementById(squ.toString()).style.textDecoration = "none";
   }
 }
 
@@ -117,7 +116,9 @@ function swapElements(obj1, obj2) {
     obj2.parentNode.insertBefore(obj1, obj2); //insert obj1 before obj2
     temp.parentNode.insertBefore(obj2, temp); //insert obj2 before temp
     temp.parentNode.removeChild(temp); //remove temp
-    winner();
+    $(document).ready(function() {
+      winner();
+    });
 }
 
 // move piece to empty space
@@ -210,9 +211,9 @@ function winner() {
     }
   }
   if (win) {
-    alert("you won!");
     jQuery(function ($) {
       $(".puzzle").hide("explode", 1000, function() {
+        alert("you won!");
         window.location.reload();
       });
     });
