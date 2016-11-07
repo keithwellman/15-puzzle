@@ -1,9 +1,11 @@
+"use strict";
 // Extra features implemented:
 // End of game notification - uses the explode effect
 // Multiple backgrounds - choose from 4 different background images
 
 $("document").ready(function() {
   // on mouseenter check if it's a movable piece
+  drawBoard(4);
   $(".piece").on('mouseenter', this,
     function (event) {
       highlight(event.target.id.toString());
@@ -12,7 +14,7 @@ $("document").ready(function() {
   // on mouseleave remove the red border and green text
   $(".piece").on('mouseleave', this,
     function (event) {
-      if (event.target.id.toString() != "square16") {
+      if (event.target.id.toString() != lastsquare) {
         $(document.getElementById(event.target.id)).css({"border-color": "black", "color": "white", "text-decoration": "none"});
       }
     }
@@ -31,6 +33,10 @@ var god = [];
 var selectBg;
 var selectedBg;
 var bg;
+var boardlength;
+var lastsquare;
+var board;
+var boardObj;
 
 document.getElementById("w3c").innerHTML = '<p><a href="http://validator.w3.org/check?uri=referer"><img src="valid-xhtml10.png" alt="Valid XHTML 1.0!" height="31" width="88" /></a><a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="vcss.gif" alt="Valid CSS!" /></a></p>';
 
@@ -39,25 +45,25 @@ function setBg() {
   selectedBg = selectBg.value;
   if (selectedBg == "HAL") {
     bg = "background.jpg";
-    for (var i = 1; i < 16; i++) {
+    for (var i = 1; i < boardlength; i++) {
       document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
     }
   }
   else if (selectedBg == "cs") {
     bg = "cs.jpg";
-    for (var i = 1; i < 16; i++) {
+    for (var i = 1; i < boardlength; i++) {
       document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
     }
   }
   else if (selectedBg == "Always Sunny") {
     bg = "sunny.jpg";
-    for (var i = 1; i < 16; i++) {
+    for (var i = 1; i < boardlength; i++) {
       document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
     }
   }
   else if (selectedBg == "enjoy") {
     bg = "enjoy.png";
-    for (var i = 1; i < 16; i++) {
+    for (var i = 1; i < boardlength; i++) {
       document.getElementById("square"+i).style.backgroundImage = "url('"+bg+"')";
     }
   }
@@ -65,15 +71,17 @@ function setBg() {
 
 // draw the squares: numOfRows^2
 function drawBoard(numOfRows) {
+  boardlength = numOfRows*numOfRows;
+  lastsquare = "square"+boardlength;
   board = [];
   boardObj = [];
-  for (var i = 0; i < (numOfRows*numOfRows); i++) {
+  for (var i = 0; i < boardlength; i++) {
     var squareDiv = document.createElement("div");
     var squareP = document.createElement("p");
     squareDiv.id = "square" + (i+1); // give each square a unique id
     squareDiv.className = "piece";
     squareDiv.appendChild(squareP);
-    if (i < ((numOfRows*numOfRows)-1)) {
+    if (i < (boardlength-1)) {
       squareDiv.firstChild.innerHTML = i+1; // display the number on the square
     }
     document.getElementById("squares").appendChild(squareDiv);
@@ -84,21 +92,23 @@ function drawBoard(numOfRows) {
 
 function shuffleBoard() {
   //shuffle the board
+  var shuffled = false;
   for (var i = 0; i < 200; i++) {
-    var randomNum = Math.floor(Math.random() * 15) + 1;
+    var randomNum = Math.floor(Math.random() * boardlength - 1) + 1;
     var godCode = move("square"+randomNum);
-    if (godCode != -1) {
-      god.push(godCode.pieceIndex); // creates an array of moves
-      // document.getElementById("cheat").innerHTML += "square"+randomNum+"\n";
-    }
+    // if (godCode != -1) {
+    //   god.push(godCode.pieceIndex); // creates an array of moves
+    //   // document.getElementById("cheat").innerHTML += "square"+randomNum+"\n";
+    // }
   }
+
   // clear style after shuffle
-  jQuery(function($) {
-    for (var i = 1; i < 16; i++) {
-      var squ = "#square"+i;
-      $(squ).css({"border-color": "black", "color": "white", "text-decoration": "none"});
-    }
-  });
+  for (var i = 1; i < boardlength; i++) {
+    var squ = "square"+i;
+    document.getElementById(squ).style.borderColor = "black";
+    document.getElementById(squ).style.color = "white";
+    document.getElementById(squ).style.textDecoration = "none";
+  }
 }
 
 function swapElements(obj1, obj2) {
@@ -131,6 +141,7 @@ function move(piece) {
 
 // highlight piece if movable
 function highlight(piece) {
+  console.log(piece);
   var pieceIndex = board.indexOf(piece);
   var boardSize = board.length;
   var pieceInfo = {pieceIndex: "", emptyPieceIndex: -1, thepiece: piece};
@@ -144,7 +155,7 @@ function highlight(piece) {
   // verify array position exists first and then check if the piece is next to the empty space
   // returns the index of empty space
   if(pieceIndex + 1 <= boardSize) {
-    if (board[pieceIndex + 1] == "square16" && pieceIndex != 3 && pieceIndex != 7 && pieceIndex !=11) {
+    if (board[pieceIndex + 1] == lastsquare && pieceIndex != 3 && pieceIndex != 7 && pieceIndex !=11) {
       //change appearence of piece that can be moved
       document.getElementById(piece).style.borderColor = "red";
       document.getElementById(piece).style.color = "#006600";
@@ -155,7 +166,7 @@ function highlight(piece) {
     }
   }
   if(pieceIndex - 1 >= 0) {
-    if (board[pieceIndex - 1] == "square16" && pieceIndex != 12 && pieceIndex != 8 && pieceIndex !=4) {
+    if (board[pieceIndex - 1] == lastsquare && pieceIndex != 12 && pieceIndex != 8 && pieceIndex !=4) {
       //change appearence of piece that can be moved
       document.getElementById(piece).style.borderColor = "red";
       document.getElementById(piece).style.color = "#006600";
@@ -166,7 +177,7 @@ function highlight(piece) {
     }
   }
   if (pieceIndex + 4 <= boardSize) {
-    if (board[pieceIndex + 4] == "square16") {
+    if (board[pieceIndex + 4] == lastsquare) {
       //change appearence of piece that can be moved
       document.getElementById(piece).style.borderColor = "red";
       document.getElementById(piece).style.color = "#006600";
@@ -177,7 +188,7 @@ function highlight(piece) {
     }
   }
   if (pieceIndex - 4 >= 0) {
-    if (board[pieceIndex - 4] == "square16") {
+    if (board[pieceIndex - 4] == lastsquare) {
       //change appearence of piece that can be moved
       document.getElementById(piece).style.borderColor = "red";
       document.getElementById(piece).style.color = "#006600";
@@ -199,9 +210,9 @@ function winner() {
     }
   }
   if (win) {
+    alert("you won!");
     jQuery(function ($) {
       $(".puzzle").hide("explode", 1000, function() {
-        alert("you won!");
         window.location.reload();
       });
     });
