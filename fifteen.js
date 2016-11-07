@@ -98,7 +98,7 @@ function shuffleBoard() {
     var godCode = move("square"+randomNum);
     // if (godCode != -1) {
     //   god.push(godCode.pieceIndex); // creates an array of moves
-    //   // document.getElementById("cheat").innerHTML += "square"+randomNum+"\n";
+    //   document.getElementById("cheat").innerHTML += "square"+randomNum+"\n";
     // }
   }
   // clear style after shuffle
@@ -211,9 +211,9 @@ function winner() {
     }
   }
   if (win) {
+    alert("you won!");
     jQuery(function ($) {
       $(".puzzle").hide("explode", 1000, function() {
-        alert("you won!");
         window.location.reload();
       });
     });
